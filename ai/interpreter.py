@@ -37,7 +37,7 @@ def interpret_intent(user_text: str) -> dict:
 
     content = response.choices[0].message.content
 
-    # NEW: handle clarification
+    # Handle clarification
     if not content.startswith("{"):
         raise ValueError(f"Clarification required: {content}")
 

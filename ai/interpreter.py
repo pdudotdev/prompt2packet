@@ -32,9 +32,13 @@ def interpret_intent(user_text: str) -> dict:
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": user_text}
-        ],
-        temperature=0 # for deterministic behavior
+        ]
     )
 
     content = response.choices[0].message.content
+
+    # NEW: handle clarification
+    if not content.startswith("{"):
+        raise ValueError(f"Clarification required: {content}")
+
     return json.loads(content)

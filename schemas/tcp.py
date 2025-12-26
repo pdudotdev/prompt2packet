@@ -9,7 +9,7 @@ class TCPIntent(BaseIntent):
 
     dst_ip: IPv4Address
     dst_port: int = Field(ge=MIN_PORT, le=MAX_PORT)
-    flags: List[str]
+    flags: List[Literal["FIN","SYN","RST","PSH","ACK","URG"]]
 
     src_ip: Optional[IPv4Address] = None
     src_port: Optional[Union[int, Literal["random"]]] = "random"

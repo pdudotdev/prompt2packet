@@ -13,8 +13,8 @@ def send_packets(plan):
     builder = PROTOCOLS[plan["protocol"]]["builder"]
     sent = 0
 
-    for _ in range(plan["count"]):
-        pkt = builder(plan["template"])
+    for i in range(plan["count"]):
+        pkt = builder(plan["template"], index=i)
 
         if SEND_ENABLED:
             send(pkt, verbose=False)

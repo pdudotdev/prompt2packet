@@ -1,3 +1,4 @@
+from packet.util import expand_ip, expand_port, choose_ephemeral_port
 from scapy.all import IP, TCP
 
 TCP_FLAG_MAP = {
@@ -36,23 +37,22 @@ TCP_FLAG_MAP = {
     "CONTROL": "C"
 }
 
-def build_tcp_packet(template):
+def build_tcp_packet(template, index=0):
     ip = IP(
-    dst=str(template["dst_ip"]),
-    src=str(template["src_ip"]) if template.get("src_ip") else None
+        src=expand_ip(template["src_ip"], index) if template.get("src_ip") else None,
+        dst=expand_ip(template["dst_ip"], index)
     )
 
     flags = "".join(TCP_FLAG_MAP[f] for f in template["flags"])
 
+    if template.get("src_port") in (None, "random"):
+        sport = choose_ephemeral_port()
+    else:
+        sport = expand_port(template["src_port"], index)
+
     tcp = TCP(
-        dport=template["dst_port"],
+        sport=sport,
+        dport=expand_port(template["dst_port"], index),
         flags=flags
-    )
-
-    if template.get("src_port") not in (None, "random"):
-        tcp.sport = template["src_port"]
-
-    if template.get("seq") is not None:
-        tcp.seq = template["seq"]
-
+)
     return ip / tcp

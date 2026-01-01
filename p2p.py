@@ -9,11 +9,21 @@ from sender.transmit import send_packets
 from observe.explain import explain_results
 from registry import PROTOCOLS
 from config import REQUIRE_ROOT
+import argparse
 import os
+
+# Test mode: OFF by default
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--test', action='store_true', required=False, help='Enable test mode')
+    return parser.parse_args()
+
+args = parse_arguments()
+TEST_MODE = args.test
 
 # Require root priv
 if REQUIRE_ROOT and os.geteuid() != 0:
-    raise PermissionError("Root privileges required!")
+    raise PermissionError("Root privileges required")
 
 def main():
     user_input = input("Describe traffic to generate:\n> ")
@@ -35,7 +45,8 @@ def main():
     validate_intent(intent)
 
     plan = build_execution_plan(intent)
-    results = send_packets(plan)
+
+    results = send_packets(plan, TEST_MODE)
 
     explain_results(intent, plan, results)
 

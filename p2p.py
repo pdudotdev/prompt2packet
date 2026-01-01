@@ -12,6 +12,10 @@ from config import REQUIRE_ROOT
 import argparse
 import os
 
+# Require root priv
+if REQUIRE_ROOT and os.geteuid() != 0:
+    raise PermissionError("Root privileges required")
+
 # Test mode: OFF by default
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -20,10 +24,10 @@ def parse_arguments():
 
 args = parse_arguments()
 TEST_MODE = args.test
-
-# Require root priv
-if REQUIRE_ROOT and os.geteuid() != 0:
-    raise PermissionError("Root privileges required")
+if not TEST_MODE:
+    print("- Mode: LIVE")
+else:
+    print("- Mode: TEST")
 
 def main():
     user_input = input("Describe traffic to generate:\n> ")

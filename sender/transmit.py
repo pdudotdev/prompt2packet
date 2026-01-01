@@ -15,10 +15,10 @@ def send_packets(plan, test_mode):
     for _ in range(plan["count"]):
         pkt = builder(plan["template"])
 
-        if test_mode:
+        if not test_mode:           
             send(pkt, verbose=False)
         else:
-            print("[TEST]", pkt.summary())
+            print(pkt.summary())
         
         sent += 1
 

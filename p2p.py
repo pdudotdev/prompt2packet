@@ -90,7 +90,7 @@ def main():
         except ValidationError as ve:
             missing = _missing_required_fields(ve)
 
-            # If it's not missing-fields, show the real validation error
+            # If it's not missing fields, show the real validation error
             if not missing:
                 print(Fore.RED + Style.BRIGHT + "Invalid input:" + Style.RESET_ALL)
                 for e in ve.errors():
@@ -118,7 +118,7 @@ def main():
             print(Fore.RED + Style.BRIGHT + f"Validation error: {e}" + Style.RESET_ALL)
             return
 
-        # Valid → execute
+        # Valid? Then execute
         plan = build_execution_plan(intent)
         results = send_packets(plan, TEST_MODE)
         explain_results(intent, plan, results)

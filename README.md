@@ -9,7 +9,7 @@ This section explains **exactly what prompt2packet does** when a user enters a p
 
 This walkthrough lists **each step in order**, **which module is involved**, and **why it is called**.
 
-🔸 ### 1. Application entry point - p2p.py
+### 🔸 1. Application entry point - p2p.py
 
 **Purpose of this module:**  
 p2p.py is the orchestrator. It coordinates the entire application.
@@ -26,7 +26,7 @@ The raw user input string is captured:
 
 p2p.py then passes this string to the AI interpreter.
 
-🔸 ### 2. Natural language parsing - ai/interpreter.py
+### 🔸 2. Natural language parsing - ai/interpreter.py
 
 **Purpose of this module:**  
 To translate human language into structured data without guessing.
@@ -49,7 +49,7 @@ This JSON is returned to p2p.py.
 
 **Keep in mind!** No validation happens here.
 
-🔸 ### 3. Protocol dispatch - p2p.py & registry.py
+### 🔸 3. Protocol dispatch - p2p.py & registry.py
 
 **Purpose of this step:**  
 To determine which schema applies in this case.
@@ -59,7 +59,7 @@ What happens:
 - Using **registry.py**, it maps `tcp` -> TCPIntent schema
 - The application now knows which schema defines correctness
 
-🔸 ### 4. Schema validation (first pass) - schemas/tcp.py
+### 🔸 4. Schema validation (first pass) - schemas/tcp.py
 
 **Purpose of this module:**  
 Schemas define what fields are mandatory and which are optional.
@@ -74,7 +74,7 @@ At this point, `dst_ip` is missing.
 
 Pydantic raises a *ValidationError* indicating missing required fields.
 
-🔸 ### 5. Clarification loop - p2p.py
+### 🔸 5. Clarification loop - p2p.py
 
 **Let's clarify the clarification step:**  
 Missing information should be requested, **not** guessed.
@@ -90,7 +90,7 @@ User sees something like:
 
 Execution pauses until the user responds.
 
-🔸 ### 6. User clarification → AI again - ai/interpreter.py
+### 🔸 6. User clarification → AI again - ai/interpreter.py
 
 User replies:
 
@@ -104,7 +104,7 @@ The AI converts this response into structured JSON:
 ```
 Then, p2p.py merges this into the existing intent data.
 
-🔸 ### 7. Schema validation (second pass) - schemas/tcp.py
+### 🔸 7. Schema validation (second pass) - schemas/tcp.py
 
 **Why validation runs again:**  
 Every clarification response must still be validated.
@@ -117,7 +117,7 @@ Now all required fields are present:
 
 Validation succeeds.
 
-🔸 ### 8. Semantic validation - validation/rules.py
+### 🔸 8. Semantic validation - validation/rules.py
 
 **Purpose of this module:**  
 Some rules cannot be expressed in schemas alone.
@@ -130,7 +130,7 @@ In this case:
 
 No semantic violations occur. Good, let's move on.
 
-🔸 ### 9. Execution planning - planner/execution.py
+### 🔸 9. Execution planning - planner/execution.py
 
 **Purpose of this module:**  
 To separate intent from execution mechanics.
@@ -155,7 +155,7 @@ Example plan structure:
   "interval_ms": 0
 }
 ```
-🔸 ### 10. Packet sending loop - sender/transmit.py
+### 🔸 10. Packet sending loop - sender/transmit.py
 
 **Purpose of this module:**  
 To control execution and iteration.
@@ -165,7 +165,7 @@ What happens:
 - A loop runs `count` times (10, here)
 - For each iteration, a packet is built and sent (or printed in test mode)
 
-🔸 ### 11. Packet construction - packet/tcp.py
+### 🔸 11. Packet construction - packet/tcp.py
 
 **Purpose of this module:**  
 To convert intent fields into real packets.
@@ -179,7 +179,7 @@ For each packet:
 
 This module just assembles the packet.
 
-🔸 ### 12. Wire execution - sender/transmit.py
+### 🔸 12. Wire execution - sender/transmit.py
 
 **Purpose:**
 To place the packet on the wire (or display it).
@@ -190,7 +190,7 @@ Depending on mode:
 
 The sender keeps track of how many packets were processed.
 
-🔸 ### 13. Result summary - observe/explain.py
+### 🔸 13. Result summary - observe/explain.py
 
 **Purpose of this module:**  
 To give clear human feedback.

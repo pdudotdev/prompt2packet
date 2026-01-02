@@ -1,15 +1,16 @@
-from typing import Optional, Literal
+from typing import Optional, List, Literal, Union
 from ipaddress import IPv4Address
 from pydantic import Field
 from schemas.base import BaseIntent
-from config import MIN_PORT, MAX_PORT
+from schemas.ranges import IPRange, PortRange
 
 class UDPIntent(BaseIntent):
     protocol: Literal["udp"]
 
-    dst_ip: IPv4Address
-    dst_port: int = Field(ge=MIN_PORT, le=MAX_PORT)
+    dst_ip: Union[IPv4Address, IPRange]
+    dst_port: Union[int, PortRange]
 
-    src_port: Optional[int] = None
+    src_ip: Optional[Union[IPv4Address, IPRange]] = None
+    src_port: Optional[Union[int, PortRange, Literal["random"]]] = "random"
 
     payload: Optional[str] = None

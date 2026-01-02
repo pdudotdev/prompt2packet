@@ -3,7 +3,6 @@ import logging
 from scapy.sendrecv import send
 from registry import PROTOCOLS
 
-#This will suppress all Scapy messages that have a lower level of seriousness than error messages
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 logging.getLogger("scapy.interactive").setLevel(logging.ERROR)
 logging.getLogger("scapy.loading").setLevel(logging.ERROR)
@@ -12,14 +11,14 @@ def send_packets(plan, test_mode):
     builder = PROTOCOLS[plan["protocol"]]["builder"]
     sent = 0
 
-    for _ in range(plan["count"]):
-        pkt = builder(plan["template"])
+    for i in range(plan["count"]):
+        pkt = builder(plan["template"], index=i)
 
-        if not test_mode:           
+        if not test_mode:
             send(pkt, verbose=False)
         else:
             print(pkt.summary())
-        
+
         sent += 1
 
         if plan["interval_ms"] > 0:

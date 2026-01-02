@@ -1,6 +1,6 @@
 from scapy.all import IP, UDP, Raw
 
-def build_udp_packet(template):
+def build_udp_packet(template, index=0):
     ip = IP(dst=str(template["dst_ip"]))
     udp = UDP(dport=template["dst_port"])
 

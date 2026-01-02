@@ -43,7 +43,7 @@ def build_tcp_packet(template, index=0):
         dst=expand_ip(template["dst_ip"], index)
     )
 
-    flags = "".join(TCP_FLAG_MAP[f] for f in template["flags"])
+    flags = "".join(TCP_FLAG_MAP[f.upper()] for f in template["flags"])
 
     if template.get("src_port") in (None, "random"):
         sport = choose_ephemeral_port()
@@ -54,5 +54,5 @@ def build_tcp_packet(template, index=0):
         sport=sport,
         dport=expand_port(template["dst_port"], index),
         flags=flags
-)
+    )
     return ip / tcp

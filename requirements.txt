@@ -1,4 +1,5 @@
 scapy
 openai
 pydantic
+colorama
 python-dotenv

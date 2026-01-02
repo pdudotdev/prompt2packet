@@ -3,7 +3,6 @@ from ipaddress import IPv4Address
 from pydantic import Field
 from schemas.base import BaseIntent
 from schemas.ranges import IPRange, PortRange
-from config import MIN_PORT, MAX_PORT
 
 class TCPIntent(BaseIntent):
     protocol: Literal["tcp"]

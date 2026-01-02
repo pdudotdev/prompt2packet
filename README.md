@@ -52,29 +52,36 @@ Running prompt2packet:
 
 Below you can see some **prompt samples** that you can use to generate network traffic.
 
-- **LIVE MODE**:
-`send 5 tcp packets to 192.168.56.129 port 22 with the reset flag on`
+▶︎ **LIVE MODE**:
+
+- `send 5 tcp packets to 192.168.56.129 port 22 with the reset flag on`
+
 ![ss1](docs/1.png)
 
-`generate 11 tcp ack packets from 192.168.1.10 port 40000-40010 to 192.168.56.129 port 80`
+- `generate 11 tcp ack packets from 192.168.1.10 port 40000-40010 to 192.168.56.129 port 80`
+
 ![ss2](docs/2.png)
 
-`send 6 tcp packets from source ports in range 40000-40020 to host 192.168.56.129 port 8888 syn`
+- `send 6 tcp packets from source ports in range 40000-40020 to host 192.168.56.129 port 8888 syn`
+
 ![ss3](docs/3.png)
 
-`simulate 7 tcp fin packets from source ip range 192.168.1.20-192.168.1.25 to 192.168.56.120-192.168.56.129 port 8080`
+- `simulate 7 tcp fin packets from source ip range 192.168.1.20-192.168.1.25 to 192.168.56.120-192.168.56.129 port 8080`
+
 ![ss4](docs/4.png)
 
-`send 15 tcp syn packets from source ip range 192.168.1.1-192.168.1.5 to destination range 192.168.56.129-192.168.56.139 port range 8000-8010`
+- `send 15 tcp syn packets from source ip range 192.168.1.1-192.168.1.5 to destination range 192.168.56.129-192.168.56.139 port range 8000-8010`
+
 ![ss5](docs/5.png)
 
-- **TEST MODE**:
-`tcp syn packets to 192.168.56.222 port 80 interval 10 ms count 5`
+▶︎ **TEST MODE**:
+- `tcp syn packets to 192.168.56.222 port 80 interval 10 ms count 5`
+
 ![ss6](docs/6.png)
 
 ⚠️ **Note:** In its current form, prompt2packet uses Scapy's **send()** function to send Layer 3 packets in the network. This means that the destination IP address(es) must be on the same subnet as an existing interface of the Kali VM, since by default Scapy relies on the kernel routing table to route packets out the correct interface.
 
-- **CLARIFICATION FEATURE**:
+▶︎ **CLARIFICATION FEATURE**:
 In prompt2packet, for each protocol there are some pre-defined **mandatory fields** that must be specified in the prompt, whilst other fields are optional.
 If the user fails to specify one or more mandatory fields in the prompt, the AI engine will ask one or several clarification questions until it collects everything it needs.
 
@@ -93,6 +100,7 @@ For example, for TCP the mandatory fields are:
 - Interval between packets
 
 Notice the clarification prompts below. Also note that since I haven't specified any number of packets to be sent - and since it's not a mandatory field - the application defaulted to 1.
+
 ![ss7](docs/7.png)
 
 **Note:** You can find more supported prompt types under `tests/` directory.

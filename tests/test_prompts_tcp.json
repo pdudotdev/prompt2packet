@@ -1,0 +1,16 @@
+{
+  "id": "tcp_081",
+  "category": "tcp",
+  "clarifications": 2,
+  "prompt": "send tcp packets",
+  "clarification_inputs": [
+    "to 10.0.0.5",
+    "port 443 with ACK flag"
+  ],
+  "expect": {
+    "protocol": "tcp",
+    "dst_ip": "10.0.0.5",
+    "dst_port": 443,
+    "flags": "A"
+  }
+}

@@ -111,7 +111,7 @@ def main():
             intent_data.update(update)
             continue
 
-        # Your additional business rules
+        # Additional rules
         try:
             validate_intent(intent)
         except Exception as e:
@@ -120,7 +120,12 @@ def main():
 
         # Valid? Then execute
         plan = build_execution_plan(intent)
-        results = send_packets(plan, TEST_MODE)
+
+        results = send_packets(plan, test_mode=TEST_MODE)
+        if TEST_MODE:
+            for pkt in results["packets"]:
+                print(pkt.summary())
+
         explain_results(intent, plan, results)
         return
 

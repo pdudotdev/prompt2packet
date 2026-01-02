@@ -55,4 +55,6 @@ def build_tcp_packet(template, index=0):
         dport=expand_port(template["dst_port"], index),
         flags=flags
     )
-    return ip / tcp
+
+    pkt = ip / tcp
+    return pkt

@@ -7,21 +7,18 @@ logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 logging.getLogger("scapy.interactive").setLevel(logging.ERROR)
 logging.getLogger("scapy.loading").setLevel(logging.ERROR)
 
-def send_packets(plan, test_mode):
+def send_packets(plan, test_mode=False):
     builder = PROTOCOLS[plan["protocol"]]["builder"]
-    sent = 0
+    packets = []
 
     for i in range(plan["count"]):
         pkt = builder(plan["template"], index=i)
+        packets.append(pkt)
 
         if not test_mode:
             send(pkt, verbose=False)
-        else:
-            print(pkt.summary())
-
-        sent += 1
 
         if plan["interval_ms"] > 0:
             time.sleep(plan["interval_ms"] / 1000)
 
-    return {"sent": sent}
+    return {"sent": len(packets), "packets": packets}

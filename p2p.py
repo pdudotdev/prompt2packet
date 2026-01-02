@@ -13,6 +13,7 @@ from config import REQUIRE_ROOT
 from colorama import Fore, Style
 from banner import BANNER
 import argparse
+import sys
 import os
 
 # Require root priv
@@ -130,4 +131,8 @@ def main():
         return
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nYou said bye. I say bye. So bye!")
+        sys.exit()

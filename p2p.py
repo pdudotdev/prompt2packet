@@ -52,9 +52,49 @@ def _missing_required_fields(err: ValidationError) -> list[str]:
             out.append(m)
     return out
 
+def _friendly_validation_error(err: ValidationError) -> str:
+    for e in err.errors():
+        loc = e.get("loc", ())
+        msg = e.get("msg", "").lower()
+
+        field = loc[0] if loc else "value"
+
+        # Range / bounds errors
+        if "greater than" in msg or "less than" in msg:
+            return (
+                f"The value provided for '{field}' is outside the allowed range. "
+                "Please provide a valid value."
+            )
+
+        # Type errors
+        if "type" in msg or "integer" in msg:
+            return (
+                f"The value provided for '{field}' has the wrong type. "
+                "Please provide a valid number."
+            )
+
+        # IP / address errors
+        if "ip" in msg:
+            return (
+                f"The value provided for '{field}' is not a valid IPv4 address "
+                "or address range."
+            )
+
+        # Port errors
+        if "port" in field:
+            return (
+                "Port values must be between 1 and 65535."
+            )
+
+    return "Invalid input. Please review the values you provided."
+
 def main():
     print(Style.BRIGHT + "➥ Describe traffic to generate (Ctrl+C to exit):\n≫ " + Style.RESET_ALL, end="")
-    user_input = input()
+    try:
+        user_input = input()
+    except KeyboardInterrupt:
+        print(Fore.RED + Style.BRIGHT + "\nExiting on user request." + Style.RESET_ALL)
+        sys.exit(0)
 
     # Step 1: best-effort extraction
     try:
@@ -73,7 +113,11 @@ def main():
             question = build_clarification_question(protocol=None, missing_fields=missing, current_intent=intent_data)
             print(Fore.YELLOW + Style.BRIGHT + question + Style.RESET_ALL)
             print(Style.BRIGHT + "≫ " + Style.RESET_ALL, end="")
-            followup = input()
+            try:
+                followup = input()
+            except KeyboardInterrupt:
+                print(Fore.RED + Style.BRIGHT + "\nExiting on user request." + Style.RESET_ALL)
+                sys.exit(0)
 
             try:
                 update = interpret_intent(followup)
@@ -93,17 +137,19 @@ def main():
         except ValidationError as ve:
             missing = _missing_required_fields(ve)
 
-            # If it's not missing fields, show the real validation error
             if not missing:
-                print(Fore.RED + Style.BRIGHT + "Invalid input:" + Style.RESET_ALL)
-                for e in ve.errors():
-                    print(" -", e.get("loc"), e.get("msg"))
+                friendly = _friendly_validation_error(ve)
+                print(Fore.RED + Style.BRIGHT + friendly + Style.RESET_ALL)
                 return
 
             question = build_clarification_question(protocol=protocol, missing_fields=missing, current_intent=intent_data)
             print(Fore.YELLOW + Style.BRIGHT + question + Style.RESET_ALL)
             print(Style.BRIGHT + "≫ " + Style.RESET_ALL, end="")
-            followup = input()
+            try:
+                followup = input()
+            except KeyboardInterrupt:
+                print(Fore.RED + Style.BRIGHT + "\nExiting on user request." + Style.RESET_ALL)
+                sys.exit(0)
 
             try:
                 update = interpret_intent(followup)

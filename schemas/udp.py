@@ -8,7 +8,7 @@ class UDPIntent(BaseIntent):
     protocol: Literal["udp"]
 
     dst_ip: Union[IPv4Address, IPRange]
-    dst_port: Union[int, PortRange]
+    dst_port: Union[int, PortRange] = Field(ge=1, le=65535)
 
     src_ip: Optional[Union[IPv4Address, IPRange]] = None
     src_port: Optional[Union[int, PortRange, Literal["random"]]] = "random"

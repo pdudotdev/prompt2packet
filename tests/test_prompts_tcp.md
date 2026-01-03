@@ -110,18 +110,18 @@
 
 ---
 
-## E. Advanced (10 tests)
+## E. Additional (10 tests)
 
 91. send 100 tcp syn packets to 192.168.56.129 port 80 ttl 2  
 92. send hundred tcp packets to 192.168.56.129 port 80 window 1  
-93. send 5 tcp packets to 192.168.56.129 port 80 window 1000000  
-94. send 5 tcp packets to 192.168.56.129 port 80 seq 0  
-95. send 5 tcp packets to 192.168.56.129 port 80 seq 1000000  
+93. send 5 tcp ack packets to 192.168.56.129 port 80 window 1000000  
+94. send 5 tcp syn packets to 192.168.56.129 port 80 seq 0  
+95. send 5 tcp rst packets to 192.168.56.129 port 80 seq 1000000  
 96. send tcp packets to 192.168.56.129 port 80 syn count 100  
 97. send 5 tcp packets from 192.168.1.10 to 192.168.56.129 port 80 syn interval 5  
 98. send tcp packets from source ip range 192.168.1.1-192.168.1.10 to 192.168.56.129 port 80 syn count 20  
 99. send 5 tcp packets from source port range 40000-40020 to 192.168.56.129 port 80 syn  
-100. send 5 tcp packets from source ip range 192.168.1.1-192.168.1.5 to destination range 192.168.56.1.1-192.168.56.129 port range 8000-8010 syn  
+100. send 50 tcp packets from source ip range 192.168.1.1-192.168.1.5 to destination range 192.168.56.1-192.168.56.129 port range 8000-8010 syn  
 
 ---
 

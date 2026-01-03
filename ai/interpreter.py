@@ -23,6 +23,7 @@ Rules:
 - If protocol is not explicitly stated, ask a clarification question.
 - Do not change protocol in follow-up responses unless the user explicitly corrects it.
 - If unsure, omit the field rather than guessing.
+- If the user provides a value, include it exactly as provided, even if it may be invalid. Do NOT omit fields due to invalid values.
 
 Schemas (for reference):
 {schemas}

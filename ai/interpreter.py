@@ -24,6 +24,7 @@ Rules:
 - Do not change protocol in follow-up responses unless the user explicitly corrects it.
 - If unsure, omit the field rather than guessing.
 - If the user provides a value, include it exactly as provided, even if it may be invalid. Do NOT omit fields due to invalid values.
+- Use interval_ms for packet interval (milliseconds)
 
 Schemas (for reference):
 {schemas}

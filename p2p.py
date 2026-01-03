@@ -88,7 +88,7 @@ def _friendly_validation_error(err: ValidationError) -> str:
 
     return "Invalid input. Please review the values you provided."
 
-def main():
+def run_once():
     print(Style.BRIGHT + "➥ Describe traffic to generate (Ctrl+C to exit):\n≫ " + Style.RESET_ALL, end="")
     try:
         user_input = input()
@@ -127,10 +127,17 @@ def main():
 
             if protocol:
                 update.pop("protocol", None)  # don't allow followups to overwrite protocol
-            intent_data.update(update)
+            for k, v in update.items():
+                if v is not None:
+                    intent_data[k] = v
+
             continue
 
         schema = PROTOCOLS[protocol]["schema"]
+
+        # Normalize user-friendly fields → schema fields
+        if "interval" in intent_data and "interval_ms" not in intent_data:
+            intent_data["interval_ms"] = intent_data.pop("interval")
 
         try:
             intent = schema.model_validate(intent_data)
@@ -157,7 +164,10 @@ def main():
                 print(Fore.RED + Style.BRIGHT + f"AI error: {e}" + Style.RESET_ALL)
                 return
 
-            intent_data.update(update)
+            for k, v in update.items():
+                if v is not None:
+                    intent_data[k] = v
+
             continue
 
         # Additional rules
@@ -179,8 +189,27 @@ def main():
         return
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\nYou said bye. I say bye. So bye!")
-        sys.exit()
+    while True:
+        try:
+            run_once()
+        except KeyboardInterrupt:
+            print(Fore.RED + Style.BRIGHT + "\nExiting. Goodbye." + Style.RESET_ALL)
+            sys.exit(0)
+
+        # After one full run finishes
+        print()
+        try:
+            again = input(
+                Style.BRIGHT
+                + Fore.GREEN
+                + "▶ Generate more traffic? (y/n): "
+                + Style.RESET_ALL
+            ).strip().lower()
+        except KeyboardInterrupt:
+            print(Fore.RED + Style.BRIGHT + "\nExiting. Goodbye." + Style.RESET_ALL)
+            sys.exit(0)
+
+        if again not in ("y", "yes"):
+            print(Fore.RED + Style.BRIGHT + "\nSession ended." + Style.RESET_ALL)
+            break
+

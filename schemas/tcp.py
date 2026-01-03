@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 from schemas.ranges import IPRange, PortRange
 from config import DEF_PACKETS, MAX_PACKETS, DEF_INTERVAL_MS, MAX_INTERVAL_MS
 
-
 class TCPIntent(BaseModel):
     protocol: Literal["tcp"] = "tcp"
 
@@ -17,9 +16,7 @@ class TCPIntent(BaseModel):
     src_ip: Optional[Union[IPv4Address, IPRange]] = None
     src_port: Optional[Union[int, PortRange, Literal["random"]]] = "random"
 
-    flags: List[Literal[
-        "FIN", "SYN", "RST", "PSH", "ACK", "URG", "ECE", "CWR"
-    ]]
+    flags: List[Literal["FIN", "SYN", "RST", "PSH", "ACK", "URG", "ECE", "CWR"]]
 
     seq: Optional[int] = None
     window: Optional[int] = None

@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 from schemas.ranges import IPRange, PortRange
 from config import DEF_PACKETS, MAX_PACKETS, DEF_INTERVAL_MS, MAX_INTERVAL_MS
 
-
 class UDPIntent(BaseModel):
     protocol: Literal["udp"] = "udp"
 

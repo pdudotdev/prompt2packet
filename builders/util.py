@@ -1,7 +1,7 @@
 from ipaddress import IPv4Address
 import random
 
-
+# The role of this file: Given a value and a packet index, tell me what concrete value to use.
 def expand_ip(value, index):
     # Single IP
     if isinstance(value, (str, IPv4Address)):

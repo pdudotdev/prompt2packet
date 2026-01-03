@@ -4,13 +4,12 @@ load_dotenv()
 
 from ai.interpreter import interpret_intent, build_clarification_question
 from sender.transmit import send_packets
-from observe.explain import explain_results
 from pydantic import ValidationError
 from schemas.tcp import TCPIntent
 from schemas.udp import UDPIntent
 from config import REQUIRE_ROOT
 from colorama import Fore, Style
-from banner import BANNER
+from docs.banner import BANNER
 import argparse
 import sys
 import os
@@ -19,12 +18,10 @@ import os
 if REQUIRE_ROOT and os.geteuid() != 0:
     raise PermissionError(Fore.RED + Style.BRIGHT + "＄ Root privileges required" + Style.RESET_ALL)
 
-
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--test', action='store_true', help='Enable test mode')
     return parser.parse_args()
-
 
 print(BANNER)
 args = parse_arguments()
@@ -38,6 +35,10 @@ print(
     + Style.RESET_ALL
 )
 
+def explain_results(intent, results):
+    print("\nExecution summary:")
+    print(f"• Protocol: {intent.protocol.upper()}")
+    print(f"• Packets sent: {results['sent']}")
 
 def _missing_required_fields(err: ValidationError) -> list[str]:
     missing = []
@@ -55,7 +56,6 @@ def _missing_required_fields(err: ValidationError) -> list[str]:
             seen.add(m)
             out.append(m)
     return out
-
 
 def main():
     print(Style.BRIGHT + "➥ Describe traffic to generate (Ctrl+C to exit):\n≫ " + Style.RESET_ALL, end="")
@@ -136,7 +136,6 @@ def main():
 
         explain_results(intent, results)
         return
-
 
 if __name__ == "__main__":
     try:

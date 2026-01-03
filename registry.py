@@ -1,5 +1,3 @@
-# registry.py
-
 from builders.tcp import build_tcp_packet
 from builders.udp import build_udp_packet
 

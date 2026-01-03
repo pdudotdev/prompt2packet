@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 from ipaddress import IPv4Address
 
-
 class IPRange(BaseModel):
     start: IPv4Address
     end: IPv4Address
@@ -11,7 +10,6 @@ class IPRange(BaseModel):
 
         if int(self.start) > int(self.end):
             raise ValueError("IPRange start must be <= end")
-
 
 class PortRange(BaseModel):
     start: int = Field(ge=1, le=65535)

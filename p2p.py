@@ -36,7 +36,7 @@ print(
 )
 
 def explain_results(intent, results):
-    print("\nExecution summary:")
+    print(Fore.GREEN + Style.BRIGHT + "\nExecution summary:" + Style.RESET_ALL)
     print(f"• Protocol: {intent.protocol.upper()}")
     print(f"• Packets sent: {results['sent']}")
 
@@ -55,6 +55,23 @@ def _missing_required_fields(err: ValidationError) -> list[str]:
         if m not in seen:
             seen.add(m)
             out.append(m)
+    return out
+
+def _invalid_fields(err: ValidationError) -> list[str]:
+    invalid = []
+    for e in err.errors():
+        if e.get("type") != "missing":
+            loc = e.get("loc", ())
+            if loc:
+                invalid.append(str(loc[0]))
+
+    # dedupe
+    seen = set()
+    out = []
+    for f in invalid:
+        if f not in seen:
+            seen.add(f)
+            out.append(f)
     return out
 
 def main():
@@ -103,16 +120,30 @@ def main():
         if "interval" in intent_data and "interval_ms" not in intent_data:
             intent_data["interval_ms"] = intent_data.pop("interval")
 
+        # Normalize TCP flags if AI returned a single string
+        if protocol == "tcp":
+            flags = intent_data.get("flags")
+            if isinstance(flags, str):
+                intent_data["flags"] = [flags.upper()]
+
         try:
             intent = schema_cls.model_validate(intent_data)
         except ValidationError as ve:
             missing = _missing_required_fields(ve)
+            invalid = _invalid_fields(ve)
 
-            question = build_clarification_question(
-                protocol=protocol,
-                missing_fields=missing,
-                current_intent=intent_data,
-            )
+            # Invalid values lead to HARD ERROR
+            if invalid:
+                print(Fore.RED + Style.BRIGHT + f"Invalid value for field(s): {', '.join(invalid)}" + Style.RESET_ALL)
+                return
+
+            # Missing fields lead to clarification
+            if missing:
+                question = build_clarification_question(
+                    protocol=protocol,
+                    missing_fields=missing,
+                    current_intent=intent_data,
+                )
             print(Fore.YELLOW + Style.BRIGHT + question + Style.RESET_ALL)
             print(Style.BRIGHT + "≫ " + Style.RESET_ALL, end="")
 

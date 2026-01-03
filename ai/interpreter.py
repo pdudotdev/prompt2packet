@@ -20,7 +20,7 @@ Rules:
 - If the user did not specify a required field, OMIT it (do not guess).
 - Do NOT invent values, defaults, protocols, or fields.
 - If protocol is not explicitly stated, ask a clarification question.
-- If unsure, omit the field rather than guessing.
+- If the user provides a value that appears to correspond to a field, include it verbatim, even if it may be invalid.
 
 Schemas (AUTHORITATIVE - you MUST comply exactly):
 {schemas}

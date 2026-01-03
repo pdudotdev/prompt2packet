@@ -19,14 +19,10 @@ Rules:
 - Use ONLY fields that exist in ONE of the schemas below.
 - If the user did not specify a required field, OMIT it (do not guess).
 - Do NOT invent values, defaults, protocols, or fields.
-- If the user explicitly mentions TCP or UDP, you MUST set protocol accordingly.
 - If protocol is not explicitly stated, ask a clarification question.
-- Do not change protocol in follow-up responses unless the user explicitly corrects it.
 - If unsure, omit the field rather than guessing.
-- If the user provides a value, include it exactly as provided, even if it may be invalid. Do NOT omit fields due to invalid values.
-- Use interval_ms for packet interval (milliseconds)
 
-Schemas (for reference):
+Schemas (AUTHORITATIVE - you MUST comply exactly):
 {schemas}
 """
 
@@ -59,7 +55,6 @@ def build_clarification_question(protocol: str | None, missing_fields: list[str]
     Ask the user a short, polite question requesting the missing required fields.
     Do NOT suggest defaults. Do NOT mention schemas. Do NOT mention internal variable names. Do NOT output JSON.
     Keep it to 1-2 sentences.
-    If asking for TCP flags, give examples like: SYN, FIN, RST, ACK.
     """
 
     user = f"""

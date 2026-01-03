@@ -9,11 +9,5 @@ MAX_INTERVAL_MS = 10000
 # Defaults
 DEFAULT_SRC_PORT = "random"
 
-# Runtime
-DEFAULT_INTERFACE = "eth1"
-
-# Behavior flags
-ALLOW_BROADCAST = False
-
 # Require root priv
 REQUIRE_ROOT = True

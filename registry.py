@@ -1,15 +1,10 @@
-from schemas.tcp import TCPIntent
-from schemas.udp import UDPIntent
-from packet.tcp import build_tcp_packet
-from packet.udp import build_udp_packet
+# registry.py
 
+from builders.tcp import build_tcp_packet
+from builders.udp import build_udp_packet
+
+# This script answers the question: Given a protocol, how do I build a packet?
 PROTOCOLS = {
-    "tcp": {
-        "schema": TCPIntent,
-        "builder": build_tcp_packet,
-    },
-    "udp": {
-        "schema": UDPIntent,
-        "builder": build_udp_packet,
-    },
+    "tcp": build_tcp_packet,
+    "udp": build_udp_packet,
 }

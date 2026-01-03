@@ -1,11 +1,15 @@
 from typing import Optional, List, Literal, Union
 from ipaddress import IPv4Address
-from pydantic import Field, field_validator
-from schemas.base import BaseIntent
+from pydantic import BaseModel, Field
 from schemas.ranges import IPRange, PortRange
+from config import DEF_PACKETS, MAX_PACKETS, DEF_INTERVAL_MS, MAX_INTERVAL_MS
 
-class TCPIntent(BaseIntent):
-    protocol: Literal["tcp"]
+
+class TCPIntent(BaseModel):
+    protocol: Literal["tcp"] = "tcp"
+
+    count: int = Field(default=DEF_PACKETS, ge=1, le=MAX_PACKETS)
+    interval_ms: int = Field(default=DEF_INTERVAL_MS, ge=0, le=MAX_INTERVAL_MS)
 
     dst_ip: Union[IPv4Address, IPRange]
     dst_port: Union[int, PortRange]
@@ -13,16 +17,10 @@ class TCPIntent(BaseIntent):
     src_ip: Optional[Union[IPv4Address, IPRange]] = None
     src_port: Optional[Union[int, PortRange, Literal["random"]]] = "random"
 
-    flags: List[Literal["FIN","SYN","RST","PSH","ACK","URG","ECE","CWR"]]
-    
+    flags: List[Literal[
+        "FIN", "SYN", "RST", "PSH", "ACK", "URG", "ECE", "CWR"
+    ]]
+
     seq: Optional[int] = None
     window: Optional[int] = None
     ttl: Optional[int] = None
-
-    @field_validator("dst_port", "src_port", mode="before")
-    @classmethod
-    def validate_ports(cls, v):
-        if isinstance(v, int):
-            if not (1 <= v <= 65535):
-                raise ValueError("Port must be between 1 and 65535")
-        return v

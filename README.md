@@ -5,7 +5,16 @@ You can find more details about the first version of this tool in this [LinkedIn
 
 ⚠️ **Note:** This application is still under test currently and more features are being added gradually.
 
-## Installation
+## 🖥️ System Requirements
+
+- **Operating System:** Linux-based systems (e.g., Kali, Ubuntu, Debian)
+  - Latest release thoroughly tested and functional on **Kali 2025.4**.
+- **Python Version:** Python 3.13 or higher
+- **Dependencies:** See requirements.txt
+- **Privileges:** Sudo access to send packets
+- **Network Interface:** Active network interface in UP state
+
+## ⚒️ Installation
 
 I've tested this application on **Kali Linux** only thus far, but it should work similarly on other Linux distros such as Ubuntu.
 
@@ -48,9 +57,10 @@ Running prompt2packet:
 - TEST mode just prints the packets to the terminal
 `sudo .p2p/bin/python p2p.py --test`
 
-## Example of Prompts for Packet Generation
+## ✍️ Examples of Prompts for Packet Generation
 
 Below you can see some **prompt samples** that you can use to generate network traffic.
+Make sure to have your Kali VM clone up and running as well, and reachable in the same subnet.
 
 ▶︎ **LIVE MODE**:
 
@@ -103,9 +113,9 @@ Notice the clarification prompts below. Also note that since I haven't specified
 
 ![ss7](docs/7.png)
 
-**Note:** You can find more supported prompt types under `tests/` directory.
+**Note:** You can find more supported prompt types under the `tests/` directory.
 
-## Example of End-to-End Logical Flow
+## 🔎 Example of End-to-End Logical Flow
 
 This section explains **exactly what prompt2packet does** when a user enters a prompt, let's say:
 
@@ -307,3 +317,16 @@ Execution summary:
 - Mode: LIVE
 ```
 
+## 🎯 Planned Upgrades
+- [x] Improved CLI experience
+- [ ] Support for CIDR notation
+- [ ] Random values in range
+- [ ] IP/port shuffling/rotation
+- [ ] Additional test cases
+- [ ] Malware traffic templates
+
+## ⚠️ Disclaimer
+**prompt2packet** is intended for educational purposes, and authorized network and security testing only. Unauthorized interception or manipulation of network traffic is illegal and unethical. Users are responsible for ensuring that their use of this tool complies with all applicable laws and regulations. The developer of **prompt2packet** does not endorse or support any malicious or unauthorized activities. Use this tool responsibly and at your own risk.
+
+## 📜 License
+**prompt2packet** is licensed under the [GNU GENERAL PUBLIC LICENSE Version 3](https://github.com/pdudotdev/prompt2packet/blob/main/LICENSE).

@@ -4,5 +4,5 @@ BANNER = r"""
   / _ \/ __/ _ \/  ' \/ _ \/ __/ __// _ \/ _ `/ __/  '_/ -_) __/
  / .__/_/  \___/_/_/_/ .__/\__/____/ .__/\_,_/\__/_/\_\\__/\__/ 
 /_/                 /_/           /_/                                                                                          
-Ver. 0.1 pdudotdev © 2026 - AI-assisted network traffic generator
+Copyright pdudotdev©2026 - AI-assisted network traffic generator
 """

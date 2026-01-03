@@ -3,13 +3,13 @@
 ## A. Baseline correctness — no clarification (30 tests)
 
 1. send 1 tcp packet to 192.168.56.129 port 80 with SYN flag  
-2. send 5 tcp packets to 192.168.1.10 port 22 with RST flag  
+2. send 5 tcp packets to 192.168.56.10 port 22 with RST flag  
 3. generate tcp syn packets toward 192.168.56.199 on port 443 count 3  
 4. tcp fin packets to 192.168.56.129 port 8080 count 10  
-5. send tcp ack packets to 192.168.56.11 25 count 2  
-6. send 10 tcp syn ack packets to 192.168.56.129 port 80 seq 1000  
-7. send 10 tcp packets to 192.168.56.129 port 80 with SYN flag ttl 64  
-8. send 10 tcp packets to 192.168.56.129 port 80 syn window 8192  
+5. send tcp ack packets to 192.168.56.11:25 count 2  
+6. send 10 tcp syn ack packets to 192.168.56.129 port 80 seq 1001  
+7. send 10 tcp packets to 192.168.56.129 port 80 with SYN flag ttl 66  
+8. send 10 tcp packets to 192.168.56.129 port 80 syn window 8193  
 9. send 10 tcp packets to 192.168.56.129 port 80 syn ttl 128 window 65535  
 10. send 10 tcp packets from 192.168.1.10 to 192.168.56.129 port 80 syn  
 11. send 10 tcp packets from 192.168.1.10 port 40000 to 192.168.56.129 port 22 syn  
@@ -50,13 +50,13 @@
 41. send 9 tcp packets from source ip range 192.168.1.20-192.168.1.25 to 192.168.56.129 port 80 fin  
 42. send 10 tcp packets from 192.168.1.10 to destination range 192.168.56.100-192.168.56.105 port 22 syn  
 43. send 3 tcp packets from 192.168.1.10 port 50000 to 192.168.56.129 port range 8080-8082 syn  
-44. send 13 tcp packets from source ip range 192.168.1.1-192.168.1.3 to destination range 192.168.56.11-192.168.56.13 port 80 syn  
+44. send 13 tcp packets from source ip range 192.168.1.1-192.168.1.3 to destination range 192.168.56.11-13 port 80 syn  
 45. send tcp packets to 192.168.56.129 port 80 syn count 10 using source port range 40000-40005  
-46. send 4 tcp packets from source ip range 10.0.0.1-10.0.0.4 to destination 192.168.56.10 port 443  
+46. send 4 tcp packets from source ip range 10.0.0.1-4 to destination 192.168.56.10 port 443  
 47. send 50 tcp packets from 10.0.0.1-192.168.56.129 to 192.168.56.10 port range 443-445  
-48. generate 11 tcp packets from 192.168.1.10 port 40000-40010 to 192.168.56.129 port 80  
-49. 3 tcp packets from source ip range 192.168.0.1-192.168.0.3 to 192.168.56.129 port 22  
-50. send 10 tcp packets from source port range 30000-30005 to destination range 192.168.56.10-192.168.56.12 port 80  
+48. generate 11 tcp push packets from 192.168.1.10 port 40000-40010 to 192.168.56.129 port 80  
+49. 3 tcp rst packets from source ip range 192.168.0.1-192.168.0.3 to 192.168.56.129 port 22  
+50. send 10 tcp ack packets from source range 30000-30005 to destination range 192.168.56.10-192.168.56.12 port 80  
 
 ---
 

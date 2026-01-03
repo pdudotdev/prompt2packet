@@ -1,5 +1,5 @@
 # prompt2packet
-AI-assisted network traffic generator written in Python. Transforms user prompt into packets being sent on the wire. Useful for QA testing, pentesting, or educational purposes.
+AI-assisted network traffic generator written in Python. Transforms user prompts into packets being sent on the wire. Useful for QA testing, pentesting, or educational purposes.
 
 You can find more details about the first version of this tool in this [LinkedIn article](https://www.linkedin.com/in/tmihaicatalin/).
 

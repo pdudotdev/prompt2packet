@@ -1,6 +1,6 @@
 # Manual TCP Prompt Test Suite
 
-## A. Baseline correctness — no clarification (30 tests)
+## A. Baseline correctness - no clarification (30 tests)
 
 1. send 1 tcp packet to 192.168.56.129 port 80 with SYN flag  
 2. send 5 tcp packets to 192.168.56.10 port 22 with RST flag  
@@ -60,7 +60,7 @@
 
 ---
 
-## C. Clarification required — 1 round (20 tests)
+## C. Clarification required - 1 round (20 tests)
 
 51. send 5 tcp packets to port 80  
 52. send 5 tcp packets to 192.168.56.129  
@@ -85,7 +85,7 @@
 
 ---
 
-## D. Clarification required — 2 rounds (20 tests)
+## D. Clarification required - 2 rounds (20 tests)
 
 71. send 2 tcp packets  
 72. generate tcp traffic, 3 pkts
@@ -110,7 +110,7 @@
 
 ---
 
-## E. Advanced / edge realism (10 tests)
+## E. Advanced (10 tests)
 
 91. send 100 tcp syn packets to 192.168.56.129 port 80 ttl 2  
 92. send hundred tcp packets to 192.168.56.129 port 80 window 1  

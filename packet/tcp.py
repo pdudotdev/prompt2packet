@@ -40,7 +40,8 @@ TCP_FLAG_MAP = {
 def build_tcp_packet(template, index=0):
     ip = IP(
         src=expand_ip(template["src_ip"], index) if template.get("src_ip") else None,
-        dst=expand_ip(template["dst_ip"], index)
+        dst=expand_ip(template["dst_ip"], index),
+        ttl=template["ttl"] if template.get("ttl") is not None else None
     )
 
     flags = "".join(TCP_FLAG_MAP[f.upper()] for f in template["flags"])
@@ -53,7 +54,9 @@ def build_tcp_packet(template, index=0):
     tcp = TCP(
         sport=sport,
         dport=expand_port(template["dst_port"], index),
-        flags=flags
+        flags=flags,
+        seq=template["seq"] if template.get("seq") is not None else None,
+        window=template["window"] if template.get("window") is not None else None
     )
 
     pkt = ip / tcp

@@ -53,7 +53,7 @@ def _missing_required_fields(err: ValidationError) -> list[str]:
     return out
 
 def main():
-    print(Style.BRIGHT + "➥ Describe traffic to generate:\n≫ " + Style.RESET_ALL, end="")
+    print(Style.BRIGHT + "➥ Describe traffic to generate (Ctrl+C to exit):\n≫ " + Style.RESET_ALL, end="")
     user_input = input()
 
     # Step 1: best-effort extraction

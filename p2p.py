@@ -81,6 +81,8 @@ def main():
                 print(Fore.RED + Style.BRIGHT + f"AI error: {e}" + Style.RESET_ALL)
                 return
 
+            if protocol:
+                update.pop("protocol", None)  # don't allow followups to overwrite protocol
             intent_data.update(update)
             continue
 

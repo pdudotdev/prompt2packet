@@ -67,13 +67,13 @@
 53. generate tcp traffic with 7 packets to 192.168.56.129 port 443  
 54. send 11 tcp packets with syn flag  
 55. 22 tcp packets to port 22  
-56. generate 3 tcp packets to 192.168.1.10  
+56. generate 3 tcp packets to 192.168.56.10  
 57. send 4 tcp packets port 80 syn  
 58. send tcp traffic to 192.168.56.129, 5 packets  
 59. send 12 tcp packets to port 443  
 60. tcp packet to 192.168.56.129 port 22  
 61. send one tcp packets to destination 192.168.56.129  
-62. send 6 tcp packets with ack  
+62. send 6 tcp packets with acks  
 63. generate 4 tcp packets port 443  
 64. 2 tcp packets syn  
 65. send tcp traffic to port 25 with 5 packets  
@@ -81,7 +81,7 @@
 67. send 11 tcp packets from 192.168.1.10  
 68. generate tcp traffic using 4 packets to port 80  
 69. send 3 tcp packets with both syn and ack flags
-70. 5 tcp packets ack  
+70. 5 tcp packets ack and fin and reset
 
 ---
 

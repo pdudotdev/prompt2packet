@@ -19,6 +19,9 @@ Rules:
 - Use ONLY fields that exist in ONE of the schemas below.
 - If the user did not specify a required field, OMIT it (do not guess).
 - Do NOT invent values, defaults, protocols, or fields.
+- If the user explicitly mentions TCP or UDP, you MUST set protocol accordingly.
+- If protocol is not explicitly stated, ask a clarification question.
+- Do not change protocol in follow-up responses unless the user explicitly corrects it.
 - If unsure, omit the field rather than guessing.
 
 Schemas (for reference):
